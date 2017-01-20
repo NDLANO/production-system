@@ -1,5 +1,7 @@
 .data
 .idea
+wp-content/plugins/fakerpress/
+wp-content/languages/plugins/fakerpress*
 
 
 # Created by https://www.gitignore.io/api/phpstorm,windows,osx,wordpress
