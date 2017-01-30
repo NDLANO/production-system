@@ -2,6 +2,8 @@
 .idea
 wp-content/plugins/fakerpress/
 wp-content/languages/plugins/fakerpress*
+wp-includes
+wp-admin
 
 
 # Created by https://www.gitignore.io/api/phpstorm,windows,osx,wordpress

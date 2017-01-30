@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Production content types
+Plugin Name: NDLA: Production content types
 */
 function register_post_types() {
     $args = array(

@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: NDLA Images
+Plugin Name: NDLA: Images
 */
 
 function media_upload_tabs_handler_ndla($tabs) {
