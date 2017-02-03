@@ -18,8 +18,8 @@ class ImageAPIGateway {
 
 
 	/**
-	 * @param $responseBody string JSON string
-	 * @param $returnAsJson bool
+	 * @param string $responseBody JSON string
+	 * @param bool $returnAsJson
 	 *
 	 * @return array|string
 	 */
@@ -30,18 +30,19 @@ class ImageAPIGateway {
 	/**
 	 * Get full details of a single image.
 	 * @param int $imageID
+	 * @param bool $returnAsJson
 	 *
 	 * @return array
 	 */
-	public function getDetails($imageID) {
+	public function getDetails($imageID, $returnAsJson = false) {
 		// Clean up params
 		$imageID = (int) $imageID;
 
 		$response = $this->guzzle->request( 'GET', $this->baseUri . $imageID );
 
-		if ( $response->getStatusCode() == 200 ) {
+		if ( $response->getStatusCode() == 200 || $imageID > 1 ) {
 			// Successful request
-			return $this->parseResponse($response->getBody());
+			return $this->parseResponse($response->getBody(), $returnAsJson);
 		} else {
 			// Unsuccessful request
 			return null;
@@ -52,7 +53,7 @@ class ImageAPIGateway {
 	/**
 	 * Find image(s) based on search query (optional).
 	 *
-	 * @param $query
+	 * @param string $query
 	 * @param int $page
 	 * @param int $pageSize
 	 * @param bool $returnAsJson
