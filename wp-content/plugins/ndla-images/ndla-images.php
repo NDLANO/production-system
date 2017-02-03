@@ -3,54 +3,55 @@
 Plugin Name: NDLA: Images
 */
 
-function media_upload_tabs_handler_ndla($tabs) {
-    $tabs['ndlatab'] = __('NDLA Images', 'ndla_images');
-    return $tabs;
+
+function ndla_thickbox_form() {
+add_thickbox(); ?>
+<div id="my-content-id" style="display:none;">
+    <div class="ndla-images">
+        <form id="ndla-image-form">
+            <p><input class="search-term" id="q" type="text" value=""></p>
+            <input id="submit-search" class="button" type="submit" value="<?= _e('Search', 'pixabay_images'); ?>">
+        </form>
+        <div id="ndla-results" class="image-results"></div>
+    </div>
+</div>
+    <?php
 }
 
-add_filter('media_upload_tabs', 'media_upload_tabs_handler_ndla');
+add_filter('admin_footer', 'ndla_thickbox_form');
 
-function mime_type_tab($tabs) {
-    /* name of custom tab */
-    $new_tab = array('mimeframe' => __('Mime Types', 'mimetype'));
-    return array_merge($tabs, $new_tab);
+
+function ndla_images_enqueue_js()
+{
+    wp_enqueue_script('my_custom_script', plugin_dir_url(__FILE__) . 'assets/js/ndla_images.js');
 }
-add_filter('media_upload_tabs', 'mime_type_tab');
-function create_mime_type_page() {
-    media_upload_header();
-    wp_enqueue_style( 'media' );
-    /* add custom code to display bellow this line */
-    /* display mime types */
-    $mimes = get_allowed_mime_types();
-    $types = array();
-    echo '<div class="type-outer">';
-    echo '<h3 class="media-title">Supported file types</h3>';
-    echo '<hr />';
-    foreach ($mimes as $ext => $mime) {
-        $types[] = '<li>' . str_replace('|', ', ', $ext) . '</li>';
+
+add_action('admin_enqueue_scripts', 'ndla_images_enqueue_js');
+
+function ndla_images_enqueue_css() {
+    wp_enqueue_style('ndla_images_styles', plugin_dir_url(__FILE__) . 'assets/css/ndla_images.css');
+}
+
+add_action('admin_enqueue_scripts', 'ndla_images_enqueue_css');
+
+function ndla_get_media_dialog_button($id = "", $classes = [], $text = "NDLA Bilder") {
+    $class = "thickbox button ";
+    if (is_array($classes)) {
+        $class .= join(" ", $classes);
     }
-    echo '<ul class="mime-types">' . implode('', $types) . '</ul>';
-    echo '</div>';
-    /* end custom code */
+
+    return '<a name="NDLA Image" id="' . $id . '" href="#TB_inline?width=780&height=650&inlineId=my-content-id" class="' . $class . '">' . $text . '</a>';
 }
-function insert_mime_type_iframe() {
-    return wp_iframe( 'create_mime_type_page');
+
+function ndla_media_buttons_context() {
+
+    return ndla_get_media_dialog_button();
 }
-add_action('media_upload_mimeframe', 'insert_mime_type_iframe');
-add_action( 'admin_head', 'mime_frame_css' );
-function mime_frame_css() {
-    echo '<style type="text/css">
-                .type-outer{margin:20px;}
-                .type-outer hr{
-                        border:solid #ccc;
-                        border-width:0px 0px 1px 0px;
-                        margin:0px 0px 20px 0px;
-                        }
-                .mime-types li{
-                        font-size:10px;
-                        float:left;
-                        width:24%;
-                        padding:1px;
-                        }
-                        </style>';
+
+add_filter('media_buttons_context', 'ndla_media_buttons_context');
+
+function ndla_images_select_image_ajax() {
+
 }
+
+add_action('wp_ajax_ndla_images_select_image', 'ndla_images_select_image_ajax');
