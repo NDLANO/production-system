@@ -4,7 +4,6 @@ namespace NDLA;
 
 
 require_once __DIR__ . '/../vendor/autoload.php';
-require_once 'Image.php';
 
 
 class ImageAPIGateway {
@@ -20,29 +19,13 @@ class ImageAPIGateway {
 
 	/**
 	 * @param $responseBody string JSON string
+	 * @param $returnAsJson bool
 	 *
 	 * @return array|string
 	 */
 	private function parseResponse( $responseBody, $returnAsJson = false ) {
 		return ( $returnAsJson ) ? (string) $responseBody : json_decode( $responseBody, true );
 	}
-
-	/**
-	 *
-	 *
-	 * @return array
-
-	public function get() {
-		$response = $this->guzzle->request( 'GET', $this->baseUri );
-
-		if ( $response->getStatusCode() == 200 ) {
-			// Successful request
-			return $this->parseResponse($response->getBody());
-		} else {
-			// Unsuccessful request
-			return null;
-		}
-	}*/
 
 	/**
 	 * Get full details of a single image.
@@ -72,12 +55,11 @@ class ImageAPIGateway {
 	 * @param $query
 	 * @param int $page
 	 * @param int $pageSize
-	 * @param bool $details
 	 * @param bool $returnAsJson
 	 *
 	 * @return array
 	 */
-	public function find( $query, $page = 1, $pageSize = 10, $details = false, $returnAsJson = false ) {
+	public function find( $query, $page = 1, $pageSize = 10, $returnAsJson = false ) {
 		// Clean up params
 		$query    = trim( $query );
 		$page     = (int) $page;
@@ -104,42 +86,10 @@ class ImageAPIGateway {
 
 		if ( $response->getStatusCode() == 200 ) {
 			// Successful request
-
-			$results = $this->parseResponse($response->getBody(), true);
-
-			if($details) {
-				// Refaktorering på gang...
-				for($i = 0; $i > count($results['results']); $i++) {
-					$imgDetails = $this->getDetails((int) $results['results'][$i]['id']);
-					$results = array_merge($results['results'][$i], $imgDetails);
-				}
-			}
-
-			return $results;
+			return $this->parseResponse($response->getBody(), $returnAsJson);
 		} else {
 			// Unsuccessful request
 			return null;
 		}
 	}
-
-	/**
-	 * Alias of find(...$returnAsJson = true)
-	 *
-	 * @param $query
-	 * @param int $page
-	 * @param int $pageSize
-	 * @param bool $details
-	 *
-	 * @return array
-	 */
-	public function findJson( $query, $page = 1, $pageSize = 10, $details = false) {
-		return $this->find( $query, $page, $pageSize, $details, true );
-	}
 }
-
-
-//$api = new ImageAPIGateway();
-//echo '<pre>';
-//print_r( $api->find( 'bil', 1, 1, false, false) );
-//print_r( $api->getDetails(32));
-//echo '</pre>';
