@@ -164,7 +164,7 @@ class acf_field_ndla_image extends acf_field {
 
             <!-- Your add & remove image links -->
             <p class="hide-if-no-js">
-                <a name="NDLA Image" href="#TB_inline?width=780&height=650&inlineId=ndla-media_dialog" class="thickbox button <?php echo $you_have_img ? 'hidden' : '' ?>">Velg metabilde</a>
+                <a name="NDLA Image" href="#TB_inline?width=780&height=650&inlineId=ndla-media_dialog" class="add-ndla-image thickbox button <?php echo $you_have_img ? 'hidden' : '' ?>">Velg metabilde</a>
                 <a class="delete-ndla-image <?php if ( ! $you_have_img  ) { echo 'hidden'; } ?>"
                    href="#">
                     <?php _e('Remove this image') ?>
