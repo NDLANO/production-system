@@ -126,18 +126,19 @@ class acf_field_ndla_image extends acf_field {
         global $post;
         wp_enqueue_media();
 
-// See if there's a media id already saved as post meta
-        $your_img_id = get_post_meta( $post->ID, '_your_img_id', true );
-
         $you_have_img = false;
-        $your_img_src = "";
+        $imageUrl = "";
+        $image_id = 0;
 
-// Get the image src
-        if (isset($field['value'])) {
-            $your_img_src = wp_get_attachment_image_src( $field['value'], 'thumbnail' );
+// See if there's a media id already saved as post meta
+        if ($field['value'] != '') {
+            $image_id = $field['value'];
 
-// For convenience, see if the array is valid
-            $you_have_img = is_array( $your_img_src );
+            $api      = new NDLA\ImageAPIGateway();
+            $response = json_decode($api->getDetails( $image_id, true ), true);
+            $you_have_img = true;
+            $imageUrl = $response['imageUrl'];
+
         }
 
         add_thickbox();
@@ -154,20 +155,20 @@ class acf_field_ndla_image extends acf_field {
                 </div>
             </div>
 
-            <input class="acf-ndla_image-value" type="hidden" name="<?php echo $field['name'] ?>" />
+            <input class="acf-ndla_image-value" type="hidden" name="<?php echo $field['name'] ?>" value="<?php $image_id ?>"/>
             <!-- Your image container, which can be manipulated with js -->
             <div class="ndla-image-container">
                 <?php if ( $you_have_img ) : ?>
-                    <img src="<?php echo $your_img_src[0] ?>" alt="" style="max-width:100%;" />
+                    <img src="<?php echo $imageUrl ?>" alt="" style="max-width:320px;" />
                 <?php endif; ?>
             </div>
 
             <!-- Your add & remove image links -->
             <p class="hide-if-no-js">
-                <a name="NDLA Image" href="#TB_inline?width=780&height=650&inlineId=ndla-media_dialog" class="add-ndla-image thickbox button <?php echo $you_have_img ? 'hidden' : '' ?>">Velg metabilde</a>
-                <a class="delete-ndla-image <?php if ( ! $you_have_img  ) { echo 'hidden'; } ?>"
+                <a name="NDLA Image" href="#TB_inline?width=780&height=650&inlineId=ndla-media_dialog" class="add-ndla-image thickbox button <?php echo $you_have_img ? 'hidden' : '' ?>"><?php _e('Velg metabilde') ?></a>
+                <a class="delete-ndla-image button <?php if ( ! $you_have_img  ) { echo 'hidden'; } ?>"
                    href="#">
-                    <?php _e('Remove this image') ?>
+                    <?php _e('Fjern metabilde') ?>
                 </a>
             </p>
 

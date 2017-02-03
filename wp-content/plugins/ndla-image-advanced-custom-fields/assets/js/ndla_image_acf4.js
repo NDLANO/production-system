@@ -48,7 +48,7 @@
                     'pageSize': per_page
                 };
 
-                jQuery.post(ajaxurl, data, function(res) {
+                jQuery.get(ajaxurl, data, function(res) {
                     var response = JSON.parse(res);
 
                     if (!(response.totalCount > 0)) {
@@ -108,7 +108,7 @@
                 // Send the attachment URL to our custom image input field.
                 var index = $(this).data('idx');
                 var image = event.data[index];
-                imgContainer.append('<img src="' +image.previewUrl + '" alt="" style="max-width:320px;"/>');
+                imgContainer.append('<img src="' + image.previewUrl + '" alt="" style="max-width:320px;"/>');
 
                 // Send the attachment id to our hidden input
                 imgIdInput.val(image.id);
@@ -127,27 +127,27 @@
             });
 
             resized();
-
-
-            // DELETE IMAGE LINK
-            delImgLink.on('click', function (event) {
-
-                event.preventDefault();
-
-                // Clear out the preview image
-                imgContainer.html('');
-
-                // Un-hide the add image link
-                addImgLink.removeClass('hidden');
-
-                // Hide the delete image link
-                delImgLink.addClass('hidden');
-
-                // Delete the image id from the hidden input
-                imgIdInput.val('');
-
-            });
         }
+
+        // DELETE IMAGE LINK
+        delImgLink.off('click');
+        delImgLink.on('click', function (event) {
+
+            event.preventDefault();
+
+            // Clear out the preview image
+            imgContainer.html('');
+
+            // Un-hide the add image link
+            addImgLink.removeClass('hidden');
+
+            // Hide the delete image link
+            delImgLink.addClass('hidden');
+
+            // Delete the image id from the hidden input
+            imgIdInput.val('');
+
+        });
 
 
     }
