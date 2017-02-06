@@ -6,7 +6,7 @@ Plugin Name: NDLA: Images
 
 function ndla_thickbox_form() {
 add_thickbox(); ?>
-<div id="my-content-id" style="display:none;">
+<div id="ndla-images-content" style="display:none;">
     <div class="ndla-images">
         <form id="ndla-image-form">
             <p><input class="search-term" id="q" type="text" value=""></p>
@@ -40,18 +40,14 @@ function ndla_get_media_dialog_button($id = "", $classes = [], $text = "NDLA Bil
         $class .= join(" ", $classes);
     }
 
-    return '<a name="NDLA Image" id="' . $id . '" href="#TB_inline?width=780&height=650&inlineId=my-content-id" class="' . $class . '">' . $text . '</a>';
+    $tag = '<a name="NDLA Image" id="' . $id . '-add-media" href="#TB_inline?width=780&height=650&inlineId=ndla-images-content" class="' . $class . '">' . $text . '</a>';
+    echo $tag;
 }
 
-function ndla_media_buttons_context() {
+function ndla_media_buttons_context($context) {
 
-    return ndla_get_media_dialog_button();
+    ndla_get_media_dialog_button($context);
 }
 
-add_filter('media_buttons_context', 'ndla_media_buttons_context');
+add_filter('media_buttons', 'ndla_media_buttons_context', 15);
 
-function ndla_images_select_image_ajax() {
-
-}
-
-add_action('wp_ajax_ndla_images_select_image', 'ndla_images_select_image_ajax');
