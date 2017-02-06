@@ -5,6 +5,7 @@ Plugin Name: NDLA: API gateway
 */
 
 require_once __DIR__ . '/includes/ImageAPIGateway.php';
+require_once __DIR__ . '/includes/admin-menu.php';
 
 
 /*
