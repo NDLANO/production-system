@@ -11,13 +11,8 @@
             e.preventDefault();
             cache = {};
             q = jQuery('#q', form).val();
-            if (jQuery('#filter_photos', form).is(':checked') && !jQuery('#filter_cliparts', form).is(':checked')) image_type = 'photo';
-            else if (!jQuery('#filter_photos', form).is(':checked') && jQuery('#filter_cliparts', form).is(':checked')) image_type = 'clipart';
-            else image_type = 'all';
-            if (jQuery('#filter_horizontal', form).is(':checked') && !jQuery('#filter_vertical', form).is(':checked')) orientation = 'horizontal';
-            else if (!jQuery('#filter_horizontal', form).is(':checked') && jQuery('#filter_vertical', form).is(':checked')) orientation = 'vertical';
-            else orientation = 'all';
-            ndla_call_api(q, 1);0
+
+            ndla_call_api(q, 1, form);
         });
 
     });
@@ -26,16 +21,16 @@
         if (jQuery(window).width() < 768) jQuery('.thumb').addClass('small'); else jQuery('.thumb').removeClass('small');
     }
 
-    window.ndla_call_api = function(q, p, selectCallback) {
-        if (p in cache)
-            render_px_results(q, p, cache[p], selectCallback);
+    window.ndla_call_api = function(queryString, pageNr, results_container, selectCallback) {
+        if (pageNr in cache)
+            render_px_results(queryString, pageNr, cache[pageNr], selectCallback);
         else {
 
 
             var data = {
                 'action': 'ndla_image_search',
-                'query': q,
-                'page': p,
+                'query': queryString,
+                'page': pageNr,
                 'pageSize': per_page
             };
 
@@ -46,14 +41,14 @@
                     jQuery('#ndla-results-container').html('<div style="color:#d71500;font-size:16px">No hits</div>');
                     return false;
                 }
-                render_px_results(q, p, response, selectCallback);
+                render_px_results(queryString, pageNr, response, results_container, selectCallback);
             });
         }
         return false;
     };
 
-    function render_px_results(q, p, data, selectCallback) {
-        var results_container = jQuery("#ndla-results-container");
+    function render_px_results(q, p, data, container, selectCallback) {
+        results_container = container.find("#ndla-results-container");
         hits = data['results']; // store for upload click
         pages = Math.ceil(data.totalCount / per_page);
         var s = '';
@@ -77,7 +72,7 @@
         results_container.off('click', '.button');
         results_container.on('click', '.button', function () {
             p = $(this).data('index');
-            ndla_call_api(q, p. selectCallback);
+            ndla_call_api(q, p. results_container, selectCallback);
         });
 
         results_container.off('click', '.thumb > img');

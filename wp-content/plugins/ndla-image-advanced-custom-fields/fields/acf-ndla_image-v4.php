@@ -145,7 +145,7 @@ class acf_field_ndla_image extends acf_field {
         ?>
 
         <div id="acf-field-ndla_image">
-            <div id="ndla-media_dialog" style="display:none;">
+            <div id="ndla-media_dialog-<?php echo $field['key'] ?>" style="display:none;">
                 <div class="ndla-images">
                     <div id="acf-ndla-images-form">
                         <p><input class="search-term" id="q" type="text" value=""></p>
@@ -155,7 +155,7 @@ class acf_field_ndla_image extends acf_field {
                 </div>
             </div>
 
-            <input class="acf-ndla_image-value" type="hidden" name="<?php echo $field['name'] ?>" value="<?php $image_id ?>"/>
+            <input class="acf-ndla_image-value" type="hidden" name="<?php echo $field['name'] ?>" value="<?php echo $image_id ?>"/>
             <!-- Your image container, which can be manipulated with js -->
             <div class="ndla-image-container">
                 <?php if ( $you_have_img ) : ?>
@@ -165,7 +165,7 @@ class acf_field_ndla_image extends acf_field {
 
             <!-- Your add & remove image links -->
             <p class="hide-if-no-js">
-                <a name="NDLA Image" href="#TB_inline?width=780&height=650&inlineId=ndla-media_dialog" class="add-ndla-image thickbox button <?php echo $you_have_img ? 'hidden' : '' ?>"><?php _e('Velg metabilde') ?></a>
+                <a name="NDLA Image" href="#TB_inline?width=780&height=650&inlineId=ndla-media_dialog-<?php echo $field['key'] ?>" class="add-ndla-image thickbox button <?php echo $you_have_img ? 'hidden' : '' ?>"><?php _e('Velg metabilde') ?></a>
                 <a class="delete-ndla-image button <?php if ( ! $you_have_img  ) { echo 'hidden'; } ?>"
                    href="#">
                     <?php _e('Fjern metabilde') ?>

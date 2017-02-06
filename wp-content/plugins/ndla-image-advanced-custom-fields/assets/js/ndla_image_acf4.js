@@ -1,17 +1,14 @@
 (function($){
 
-    var delImgLink,
-        addImgLink,
-        imgContainer,
-        imgIdInput,
-        form,
-        input,
-        submitButton;
-
-    var per_page = 10;
-
     function initializeNDLAField(metaBox) { // Set all variables to be used in scope
 
+        var delImgLink,
+            addImgLink,
+            imgContainer,
+            imgIdInput,
+            form,
+            input,
+            submitButton;
 
         delImgLink = metaBox.find('.delete-ndla-image');
         addImgLink = metaBox.find('.add-ndla-image');
@@ -48,16 +45,13 @@
             }
         });
 
-        submitButton.on('click', function () {
+        submitButton.on('click', function (event) {
             cache = {};
+            var container = $(event.toElement).parents('.ndla-images');
+            var input = container.find("#q");
             q = input.val();
-            if (jQuery('#filter_photos', form).is(':checked') && !jQuery('#filter_cliparts', form).is(':checked')) image_type = 'photo';
-            else if (!jQuery('#filter_photos', form).is(':checked') && jQuery('#filter_cliparts', form).is(':checked')) image_type = 'clipart';
-            else image_type = 'all';
-            if (jQuery('#filter_horizontal', form).is(':checked') && !jQuery('#filter_vertical', form).is(':checked')) orientation = 'horizontal';
-            else if (!jQuery('#filter_horizontal', form).is(':checked') && jQuery('#filter_vertical', form).is(':checked')) orientation = 'vertical';
-            else orientation = 'all';
-            window.ndla_call_api(q, 0, function (event) {
+
+            window.ndla_call_api(q, 0, container, function (event) {
                 // Send the attachment URL to our custom image input field.
                 var index = $(event.toElement).data('idx');
                 var image = event.data[index];

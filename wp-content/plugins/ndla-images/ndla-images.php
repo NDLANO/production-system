@@ -12,7 +12,7 @@ add_thickbox(); ?>
             <p><input class="search-term" id="q" type="text" value=""></p>
             <input id="submit-search" class="button" type="submit" value="<?= _e('Search', 'pixabay_images'); ?>">
         </form>
-        <div id="ndla-results" class="image-results"></div>
+        <div id="ndla-results-container" class="image-results"></div>
     </div>
 </div>
     <?php
