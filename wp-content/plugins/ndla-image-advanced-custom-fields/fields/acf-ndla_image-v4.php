@@ -147,7 +147,7 @@ class acf_field_ndla_image extends acf_field {
         <div id="acf-field-ndla_image">
             <div id="ndla-media_dialog" style="display:none;">
                 <div class="ndla-images">
-                    <div id="ndla-image-form">
+                    <div id="acf-ndla-images-form">
                         <p><input class="search-term" id="q" type="text" value=""></p>
                         <input id="submit-search" class="button" type="button" value="<?= _e('Search', 'pixabay_images'); ?>">
                     </div>
