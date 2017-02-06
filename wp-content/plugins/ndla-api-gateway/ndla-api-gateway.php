@@ -7,8 +7,24 @@ Plugin Name: NDLA: API gateway
 require_once __DIR__ . '/includes/ImageAPIGateway.php';
 
 
+/*
+ * Global functions for use in theme/other plugins
+ */
+if ( ! function_exists( 'ndla_image_search' ) ) {
+	function ndla_image_search( $query, $page = 1, $pageSize = 10 ) {
+		$api = new NDLA\ImageAPIGateway();
 
+		return $api->find( $query, $page, $pageSize, false );
+	}
+}
 
+if ( ! function_exists( 'ndla_image_details' ) ) {
+	function ndla_image_details( $imageID ) {
+		$api = new NDLA\ImageAPIGateway();
+
+		return $api->getDetails( $imageID, false );
+	}
+}
 
 
 /*
