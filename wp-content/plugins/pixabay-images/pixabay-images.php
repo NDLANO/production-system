@@ -26,14 +26,17 @@ add_action('admin_enqueue_scripts', 'pixabay_images_enqueue_jquery');
 
 // add tab to media upload window
 function media_upload_tabs_handler($tabs) { $tabs['pixabaytab'] = __('Pixabay Images', 'pixabay_images'); return $tabs; }
-add_filter('media_upload_tabs', 'media_upload_tabs_handler');
+//add_filter('media_upload_tabs', 'media_upload_tabs_handler');
 
 
 // add button next to "Add Media"
 $pixabay_images_settings = get_option('pixabay_images_options');
 if (!$pixabay_images_settings['button'] | $pixabay_images_settings['button']=='true') {
-    function media_buttons_context_handler($editor_id='') { return '<a href="'.add_query_arg('tab', 'pixabaytab', esc_url(get_upload_iframe_src())).'" id="'.esc_attr($editor_id).'-add_media" class="thickbox button" title="'.esc_attr__('Pixabay Images', 'pixabay_images').'"><img style="position:relative;top:-2px" src="'.plugin_dir_url(__FILE__).'favicon.png'.'"> Pixabay</a>'; }
-    add_filter('media_buttons_context', 'media_buttons_context_handler');
+    function media_buttons_context_handler($editor_id='') {
+        $tag = '<a href="'.add_query_arg('tab', 'pixabaytab', esc_url(get_upload_iframe_src())).'" id="'.esc_attr($editor_id).'-add_media" class="thickbox button" title="'.esc_attr__('Pixabay Images', 'pixabay_images').'"><img style="position:relative;top:-2px" src="'.plugin_dir_url(__FILE__).'favicon.png'.'"> Pixabay</a>';
+        echo $tag;
+    }
+    add_filter('media_buttons', 'media_buttons_context_handler');
 }
 
 
