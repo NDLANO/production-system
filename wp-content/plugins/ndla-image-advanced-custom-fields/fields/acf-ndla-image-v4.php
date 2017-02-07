@@ -28,8 +28,8 @@ class acf_field_ndla_image extends acf_field {
 	{
 		// vars
 		$this->name = 'ndla_image';
-		$this->label = __('NDLA Image');
-		$this->category = __("Basic",'acf'); // Basic, Content, Choice, etc
+		$this->label = __('NDLA Image', 'acf-field-ndla-image');
+		$this->category = __('Content','acf'); // Basic, Content, Choice, etc
 		$this->defaults = array(
 			// add default here to merge into your field. 
 			// This makes life easy when creating the field options as you don't need to use any if( isset('') ) logic. eg:
@@ -145,30 +145,30 @@ class acf_field_ndla_image extends acf_field {
         ?>
 
         <div id="acf-field-ndla_image">
-            <div id="ndla-media_dialog-<?php echo $field['key'] ?>" style="display:none;">
+            <div id="ndla-media_dialog-<?= $field['key'] ?>" style="display:none;">
                 <div class="ndla-images">
                     <div id="acf-ndla-images-form">
                         <p><input class="search-term" id="q" type="text" value=""></p>
-                        <input id="submit-search" class="button" type="button" value="<?= _e('Search', 'pixabay_images'); ?>">
+                        <input id="submit-search" class="button" type="button" value="<?php _e('Search', 'acf-ndla-image'); ?>">
                     </div>
                     <div id="ndla-results-container" class="image-results"></div>
                 </div>
             </div>
 
-            <input class="acf-ndla_image-value" type="hidden" name="<?php echo $field['name'] ?>" value="<?php echo $image_id ?>"/>
+            <input class="acf-ndla_image-value" type="hidden" name="<?php echo $field['name'] ?>" value="<?= $image_id ?>"/>
             <!-- Your image container, which can be manipulated with js -->
             <div class="ndla-image-container">
                 <?php if ( $you_have_img ) : ?>
-                    <img src="<?php echo $imageUrl ?>" alt="" style="max-width:320px;" />
+                    <img src="<?= $imageUrl ?>" alt="" style="max-width:320px;" />
                 <?php endif; ?>
             </div>
 
             <!-- Your add & remove image links -->
             <p class="hide-if-no-js">
-                <a name="NDLA Image" href="#TB_inline?width=780&height=650&inlineId=ndla-media_dialog-<?php echo $field['key'] ?>" class="add-ndla-image thickbox button <?php echo $you_have_img ? 'hidden' : '' ?>"><?php _e('Velg metabilde') ?></a>
+                <a name="<?php _e('NDLA Image', 'acf-ndla-image') ?>" href="#TB_inline?width=780&height=650&inlineId=ndla-media_dialog-<?= $field['key'] ?>" class="add-ndla-image thickbox button <?= $you_have_img ? 'hidden' : '' ?>"><?php _e('Choose image', 'acf-ndla-image') ?></a>
                 <a class="delete-ndla-image button <?php if ( ! $you_have_img  ) { echo 'hidden'; } ?>"
                    href="#">
-                    <?php _e('Fjern metabilde') ?>
+                    <?php _e('Remove image', 'acf-ndla-image') ?>
                 </a>
             </p>
 

@@ -1,8 +1,14 @@
 <?php
 /*
 Plugin Name: NDLA: Images
+Author: Mathias Lidal
+Text Domain: ndla-images
 */
 
+function ndla_images_load_plugin_textdomain() {
+    load_plugin_textdomain( 'ndla-images', FALSE, basename( dirname( __FILE__ ) ) . '/languages/' );
+}
+add_action( 'plugins_loaded', 'ndla_images_load_plugin_textdomain' );
 
 function ndla_thickbox_form() {
 add_thickbox(); ?>
@@ -10,7 +16,7 @@ add_thickbox(); ?>
     <div class="ndla-images">
         <form id="ndla-image-form">
             <p><input class="search-term" id="q" type="text" value=""></p>
-            <input id="submit-search" class="button" type="submit" value="<?= _e('Search', 'pixabay_images'); ?>">
+            <input id="submit-search" class="button" type="submit" value="<?php _e('Search', 'ndla-images'); ?>">
         </form>
         <div id="ndla-results-container" class="image-results"></div>
     </div>
@@ -34,7 +40,7 @@ function ndla_images_enqueue_css() {
 
 add_action('admin_enqueue_scripts', 'ndla_images_enqueue_css');
 
-function ndla_get_media_dialog_button($id = "", $classes = [], $text = "NDLA Bilder") {
+function ndla_get_media_dialog_button($id, $text, $classes = []) {
     $class = "thickbox button ";
     if (is_array($classes)) {
         $class .= join(" ", $classes);
@@ -44,9 +50,9 @@ function ndla_get_media_dialog_button($id = "", $classes = [], $text = "NDLA Bil
     echo $tag;
 }
 
-function ndla_media_buttons_context($context) {
+    function ndla_media_buttons_context($context) {
 
-    ndla_get_media_dialog_button($context);
+        ndla_get_media_dialog_button($context, __('NDLA Images', 'ndla-images'));
 }
 
 add_filter('media_buttons', 'ndla_media_buttons_context', 15);
