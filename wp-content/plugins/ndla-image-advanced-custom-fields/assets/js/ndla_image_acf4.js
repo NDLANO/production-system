@@ -39,15 +39,16 @@
 
         });
 
-        input.keyup(function (event) {
+        input.keyup(submitButton, function (event) {
             if (event.keyCode == 13) {
-                submitButton.click();
+                var button = event.data;
+                button.click();
             }
         });
 
         submitButton.on('click', function (event) {
             cache = {};
-            var container = $(event.toElement).parents('.ndla-images');
+            var container = $(event.target).parents('.ndla-images');
             var input = container.find("#q");
             q = input.val();
 

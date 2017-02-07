@@ -146,7 +146,7 @@ class acf_field_ndla_image extends acf_field {
 
         <div id="acf-field-ndla_image">
             <div id="ndla-media_dialog-<?= $field['key'] ?>" style="display:none;">
-                <div class="ndla-images">
+                <div id="ndla-images-<?= $field['key'] ?>" class="ndla-images">
                     <div id="acf-ndla-images-form">
                         <p><input class="search-term" id="q" type="text" value=""></p>
                         <input id="submit-search" class="button" type="button" value="<?php _e('Search', 'acf-ndla-image'); ?>">
