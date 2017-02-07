@@ -4,7 +4,7 @@ if (count($argv) < 2) {
     exit(1);
 }
 
-$description = join(" ", array_slice($argv, 1));
+$description = '"' . join(" ", array_slice($argv, 1)) . '"';
 
 $deployment_group = "NDLA_Produksjonssystem";
 $deployment_group_placeholder = "<deployment-group-name>";
