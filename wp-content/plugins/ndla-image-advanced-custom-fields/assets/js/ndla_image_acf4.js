@@ -52,9 +52,9 @@
             var input = container.find("#q");
             q = input.val();
 
-            window.ndla_call_api(q, 0, container, function (event) {
+            window.ndla_call_api(q, 1, container, function (event) {
                 // Send the attachment URL to our custom image input field.
-                var index = $(event.toElement).data('idx');
+                var index = $(event.target).data('idx');
                 var image = event.data[index];
                 imgContainer.append('<img src="' + image.previewUrl + '" alt="" style="max-width:320px;"/>');
 

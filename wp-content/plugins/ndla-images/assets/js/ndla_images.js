@@ -48,7 +48,7 @@
     };
 
     function render_px_results(q, p, data, container, selectCallback) {
-        results_container = container.find("#ndla-results-container");
+        var results_container = container.find("#ndla-results-container");
         hits = data['results']; // store for upload click
         pages = Math.ceil(data.totalCount / per_page);
         var s = '';
@@ -56,14 +56,14 @@
             s += '<div class="thumb" data-idx="' + k + '"><img data-idx="' + k + '" style="width:160px;height:120px;" src="' + v.previewUrl + '"></div>';
         });
         s += '<div style="clear:both;height:30px"></div><div id="paginator" style="text-align:center">';
-        if (p == 0)
+        if (p == 1)
             s += '<span class="button disabled">Prev</span>';
         else
             s += '<a href="#" data-index="' + (p - 1) + '" class="button">Prev</a>';
-        for (i = 1; i < pages + 1; i++) {
-            s += '<a href="#" data-index="' + (i - 1) + '" class="button' + (p == i ? ' disabled' : '') + '">' + i + '</a>';
+        for (var i = 1; i < pages + 1; i++) {
+            s += '<a href="#" data-index="' + i + '" class="button' + (p == i ? ' disabled' : '') + '">' + i + '</a>';
         }
-        if (p == pages - 1)
+        if (p == pages)
             s += '<span class="button disabled">Next</span>';
         else
             s += '<a href="#" data-index="' + (p + 1) + '" class="button">Next</a>';
@@ -72,7 +72,7 @@
         results_container.off('click', '.button');
         results_container.on('click', '.button', function () {
             p = $(this).data('index');
-            ndla_call_api(q, p. results_container, selectCallback);
+            ndla_call_api(q, p, container, selectCallback);
         });
 
         results_container.off('click', '.thumb > img');
