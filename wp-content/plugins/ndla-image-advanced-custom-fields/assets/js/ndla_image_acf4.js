@@ -3,16 +3,16 @@
     function initializeNDLAField(metaBox) { // Set all variables to be used in scope
 
         var delImgLink,
-            addImgLink,
             imgContainer,
             imgIdInput,
+            noImage,
             form,
             input,
             submitButton;
 
         delImgLink = metaBox.find('.delete-ndla-image');
-        addImgLink = metaBox.find('.add-ndla-image');
         imgContainer = metaBox.find('.ndla-image-container');
+        noImage = metaBox.find('.no-image');
         imgIdInput = metaBox.find('.acf-ndla_image-value');
         form = metaBox.find('#acf-ndla-images-form');
 
@@ -24,12 +24,13 @@
         delImgLink.on('click', function (event) {
 
             event.preventDefault();
+            var img = imgContainer.find('ndla-image');
+            img.src = '';
+            img.addClass('hidden');
 
-            // Clear out the preview image
-            imgContainer.html('');
+            imgContainer.parent().removeClass('active');
 
-            // Un-hide the add image link
-            addImgLink.removeClass('hidden');
+            noImage.removeClass('hidden');
 
             // Hide the delete image link
             delImgLink.addClass('hidden');
@@ -46,29 +47,31 @@
             }
         });
 
+        var select_image = function (event) {
+            // Send the attachment URL to our custom image input field.
+            var index = $(event.target).data('idx');
+            var image = event.data[index];
+            var img = imgContainer.find('ndla-image');
+            img.src = image.previewUrl;
+            img.removeClass('hidden');
+            noImage.addClass('hidden');
+            imgContainer.parent().addClass('active');
+
+            // Send the attachment id to our hidden input
+            imgIdInput.val(image.id);
+
+            // Show the remove image link
+            delImgLink.removeClass('hidden');
+        };
+
+
         submitButton.on('click', function (event) {
             cache = {};
             var container = $(event.target).parents('.ndla-images');
             var input = container.find("#q");
             q = input.val();
 
-            window.ndla_call_api(q, 1, container, function (event) {
-                // Send the attachment URL to our custom image input field.
-                var index = $(event.target).data('idx');
-                var image = event.data[index];
-                imgContainer.append('<img src="' + image.previewUrl + '" alt="" style="max-width:320px;"/>');
-
-                // Send the attachment id to our hidden input
-                imgIdInput.val(image.id);
-
-                // Hide the add image link
-                addImgLink.addClass('hidden');
-
-                // Unhide the remove image link
-                delImgLink.removeClass('hidden');
-            });
-
-
+            window.ndla_call_api(q, 1, container, select_image);
         });
 
     }
@@ -78,4 +81,24 @@
             initializeNDLAField($(this));
         })
     });
+
+    $(document).on('acf/validate_field', function( e, f ){
+        // vars
+        var field = $(f);
+
+        var field_type = field.data('field_type');
+        if (field_type == 'ndla_image') {
+            var key = field.data('field_key');
+            var valuefield = field.find("input[type='hidden'][name='fields[" + key + "]']");
+
+            // set validation to false on this field
+            if( valuefield.val() != '' ) {
+                field.data('validation', true);
+            }
+        }
+
+
+    });
+
+
 })(jQuery);

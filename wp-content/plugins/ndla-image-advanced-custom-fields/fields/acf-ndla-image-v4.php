@@ -121,8 +121,8 @@ class acf_field_ndla_image extends acf_field {
 		
 		// perhaps use $field['preview_size'] to alter the markup?
 		
-		
-		// create Field HTML
+
+        // create Field HTML
         global $post;
         wp_enqueue_media();
 
@@ -130,21 +130,21 @@ class acf_field_ndla_image extends acf_field {
         $imageUrl = "";
         $image_id = 0;
 
-// See if there's a media id already saved as post meta
+        // See if there's a media id already saved as post meta
         if ($field['value'] != '') {
-            $image_id = $field['value'];
+        $image_id = $field['value'];
 
-            $api      = new NDLA\ImageAPIGateway();
-            $response = json_decode($api->getDetails( $image_id, true ), true);
-            $you_have_img = true;
-            $imageUrl = $response['imageUrl'];
+        $api      = new NDLA\ImageAPIGateway();
+        $response = json_decode($api->getDetails( $image_id, true ), true);
+        $you_have_img = true;
+        $imageUrl = $response['imageUrl'];
 
         }
 
         add_thickbox();
         ?>
 
-        <div id="acf-field-ndla_image">
+        <div id="acf-field-ndla_image" class="acf-image-uploader <?= $you_have_img ? 'active' : '' ?> clearfix">
             <div id="ndla-media_dialog-<?= $field['key'] ?>" style="display:none;">
                 <div id="ndla-images-<?= $field['key'] ?>" class="ndla-images">
                     <div id="acf-ndla-images-form">
@@ -157,19 +157,23 @@ class acf_field_ndla_image extends acf_field {
 
             <input class="acf-ndla_image-value" type="hidden" name="<?php echo $field['name'] ?>" value="<?= $image_id ?>"/>
             <!-- Your image container, which can be manipulated with js -->
-            <div class="ndla-image-container">
-                <?php if ( $you_have_img ) : ?>
-                    <img src="<?= $imageUrl ?>" alt="" style="max-width:320px;" />
-                <?php endif; ?>
+            <div class="ndla-image-container has-image">
+                <div class="hover">
+                    <ul class="bl">
+                        <li><a class="acf-button-delete ir delete-ndla-image" href="#">Remove</a></li>
+                        <li><a class="acf-button-edit ir" href="#">Edit</a></li>
+                    </ul>
+                </div>
+                <img src="<?= $imageUrl ?>" class="ndla-image <?= $you_have_img ? '' : 'hidden' ?>" alt="" style="max-width:320px;" />
+            </div>
+            <div class="no-image <?= $you_have_img ? 'hidden' : '' ?>">
+                <p><?php _e('no image selected', 'acf-ndla-image'); ?>
+                    <a name="<?php _e('NDLA Image', 'acf-ndla-image') ?>" href="#TB_inline?width=780&height=650&inlineId=ndla-media_dialog-<?= $field['key'] ?>" class="add-ndla-image thickbox button"><?php _e('Choose image', 'acf-ndla-image') ?></a>
+                </p>
             </div>
 
             <!-- Your add & remove image links -->
             <p class="hide-if-no-js">
-                <a name="<?php _e('NDLA Image', 'acf-ndla-image') ?>" href="#TB_inline?width=780&height=650&inlineId=ndla-media_dialog-<?= $field['key'] ?>" class="add-ndla-image thickbox button <?= $you_have_img ? 'hidden' : '' ?>"><?php _e('Choose image', 'acf-ndla-image') ?></a>
-                <a class="delete-ndla-image button <?php if ( ! $you_have_img  ) { echo 'hidden'; } ?>"
-                   href="#">
-                    <?php _e('Remove image', 'acf-ndla-image') ?>
-                </a>
             </p>
 
         </div>
