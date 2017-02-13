@@ -1,7 +1,6 @@
 (function($) {
 
     var form;
-    var lang = 'en';
     var per_page=10;
 
     jQuery(document).ready(function() {
@@ -49,8 +48,8 @@
 
     function render_px_results(q, p, data, container, selectCallback) {
         var results_container = container.find("#ndla-results-container");
-        hits = data['results']; // store for upload click
-        pages = Math.ceil(data.totalCount / per_page);
+        var hits = data['results']; // store for upload click
+        var pages = Math.ceil(data.totalCount / per_page);
         var s = '';
         jQuery.each(data.results, function (k, v) {
             s += '<div class="thumb" data-idx="' + k + '"><img data-idx="' + k + '" style="width:160px;height:120px;" src="' + v.previewUrl + '"></div>';
