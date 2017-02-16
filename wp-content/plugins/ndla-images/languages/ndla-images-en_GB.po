@@ -1,0 +1,24 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2017-02-07 09:26+0100\n"
+"PO-Revision-Date: 2017-02-07 09:31+0100\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.11\n"
+"X-Poedit-Basepath: ../git/ndlano/production-system/wp-content/plugins/ndla-images\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"Last-Translator: \n"
+"Language: en\n"
+"X-Poedit-SearchPath-0: ndla-images.php\n"
+
+#: ndla-images.php:13
+msgid "Search"
+msgstr "Search"
+
+#: ndla-images.php:49
+msgid "NDLA Images"
+msgstr "NDLA Images"

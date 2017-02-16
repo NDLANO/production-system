@@ -45,7 +45,7 @@ class acf_plugin_ndla_image {
 		
 		// set text domain
 		// https://codex.wordpress.org/Function_Reference/load_plugin_textdomain
-		load_plugin_textdomain( 'acf-ndla_image', false, plugin_basename( dirname( __FILE__ ) ) . '/lang' );
+		load_plugin_textdomain( 'acf-ndla-image', false, plugin_basename( dirname( __FILE__ ) ) . '/lang' );
 		
 		
 		// include field
@@ -75,7 +75,7 @@ class acf_plugin_ndla_image {
 		
 		
 		// include
-		include_once('fields/acf-ndla_image-v' . $version . '.php');
+		include_once('fields/acf-ndla-image-v' . $version . '.php');
 		
 	}
 	
