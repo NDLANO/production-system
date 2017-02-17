@@ -1,0 +1,35 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Package Name\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-02-17 15:31+0100\n"
+"PO-Revision-Date: 2017-02-17 15:33+0100\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.11\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: nb_NO\n"
+
+#: ndla-production-system.php:44
+msgid "NDLA Production system"
+msgstr "NDLA Produksjonssystem"
+
+#: ndla-production-system.php:44
+msgid "A plugin dependency is missing. Some things may not work properly."
+msgstr "En plugin-avhengighet mangler. Noen ting kan slutte å fungere."
+
+#: ndla-production-system.php:58 ndla-production-system.php:64
+msgid "Unable to activate"
+msgstr "Kan ikke aktivere"
+
+#: ndla-production-system.php:59
+msgid "Plugin dependencies missing"
+msgstr "Plugin-avhengighet mangler"
