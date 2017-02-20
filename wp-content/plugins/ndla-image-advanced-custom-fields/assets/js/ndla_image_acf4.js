@@ -24,8 +24,8 @@
         delImgLink.on('click', function (event) {
 
             event.preventDefault();
-            var img = imgContainer.find('ndla-image');
-            img.src = '';
+            var img = imgContainer.find('.ndla-image');
+            img.attr('src', '');
             img.addClass('hidden');
 
             imgContainer.parent().removeClass('active');
@@ -51,8 +51,8 @@
             // Send the attachment URL to our custom image input field.
             var index = $(event.target).data('idx');
             var image = event.data[index];
-            var img = imgContainer.find('ndla-image');
-            img.src = image.previewUrl;
+            var img = imgContainer.find('.ndla-image');
+            img.attr('src', image.previewUrl);
             img.removeClass('hidden');
             noImage.addClass('hidden');
             imgContainer.parent().addClass('active');
