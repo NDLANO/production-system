@@ -92,8 +92,10 @@
             var valuefield = field.find("input[type='hidden'][name='fields[" + key + "]']");
 
             // set validation to false on this field
-            if( valuefield.val() != '' ) {
+            if( valuefield.val() != '' && valuefield.val() != '0') {
                 field.data('validation', true);
+            } else {
+                field.data('validatoin', false);
             }
         }
 
