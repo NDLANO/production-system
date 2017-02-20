@@ -88,5 +88,3 @@ new acf_plugin_ndla_image();
 
 // class_exists check
 endif;
-	
-?>

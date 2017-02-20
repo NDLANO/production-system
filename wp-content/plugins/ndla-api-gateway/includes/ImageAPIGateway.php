@@ -12,7 +12,11 @@ class ImageAPIGateway {
 	private $guzzle;
 
 	function __construct() {
-		$this->baseUri = 'http://staging.api.ndla.no/image-api/v1/images/';
+	    $optApiUrl = get_option('ndla_api_url');
+	    if(empty($optApiUrl)) {
+	        $optApiUrl = 'http://staging.api.ndla.no/';
+        }
+		$this->baseUri = $optApiUrl.'image-api/v1/images/';
 		$this->guzzle  = new \GuzzleHttp\Client( [ 'base_uri' => $this->baseUri ] );
 	}
 
@@ -26,6 +30,7 @@ class ImageAPIGateway {
 	private function parseResponse( $responseBody, $returnAsJson = false ) {
 		return ( $returnAsJson ) ? (string) $responseBody : json_decode( $responseBody, true );
 	}
+
 
 	/**
 	 * Get full details of a single image.

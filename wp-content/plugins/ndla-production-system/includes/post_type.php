@@ -6,7 +6,7 @@ function ndla_register_post_types() {
     $args = array(
         'public' => true,
         'label' => 'Emnebeskrivelser',
-	    'supports' => 'title'
+        'supports' => 'title'
     );
 
     register_post_type('emnebeskrivelse', $args);

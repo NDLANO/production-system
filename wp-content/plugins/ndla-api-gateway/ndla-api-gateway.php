@@ -2,10 +2,19 @@
 
 /*
 Plugin Name: NDLA: API gateway
+Version: 1.0.0
+Author: NDLA/Bouvet
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
+
+
+defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
+
 
 require_once __DIR__ . '/includes/ImageAPIGateway.php';
 require_once __DIR__ . '/includes/admin-menu.php';
+
 
 
 /*
@@ -26,6 +35,7 @@ if ( ! function_exists( 'ndla_image_details' ) ) {
 		return $api->getDetails( $imageID, false );
 	}
 }
+
 
 
 /*
