@@ -1,18 +1,66 @@
 (function($) {
 
     var form;
+    var container;
     var per_page=10;
+    var selected_image;
 
     jQuery(document).ready(function() {
-        form = jQuery('#ndla-image-form');
+        var wWidth = $(window).width();
+        var dWidth = wWidth * 0.8;
+        var wHeight = $(window).height();
+        var dHeight = wHeight * 0.8;
 
-        form.submit(function (e) {
-            e.preventDefault();
-            cache = {};
-            q = jQuery('#q', form).val();
+        var ndlaDialog = $('#ndla-images-content');
+        ndlaDialog.dialog({
+            title: 'My Dialog',
+            dialogClass: 'wp-dialog',
+            autoOpen: false,
+            draggable: false,
+            width: dWidth,
+            height: dHeight,
+            modal: true,
+            resizable: false,
+            closeOnEscape: true,
+            position: {
+                my: "center",
+                at: "center",
+                of: window
+            },
+            open: function () {
+                // close dialog by clicking the overlay behind it
+                $('.ui-widget-overlay').bind('click', function(){
+                    $('#ndla-images-content').dialog('close');
+                });
 
-            ndla_call_api(q, 1, form);
+                form = ndlaDialog.find('#ndla-image-form');
+                container = ndlaDialog.find('#ndla-results-container');
+                form.submit(function (e) {
+                    e.preventDefault();
+                    cache = {};
+                    var query = jQuery('#q', form).val();
+
+                    ndla_call_api(query, 1, container);
+                });
+
+                ndlaDialog.find('.ndla-image-button-insert').on('click', selected_image, function(event) {
+                    var image = event.data;
+                    wp.media.editor.insert('<img src="' + image.src + '" />');
+                    $('#ndla-images-content').dialog('close');
+                })
+            },
+            create: function () {
+                // style fix for WordPress admin
+                $('.ui-dialog-titlebar-close').addClass('ui-button');
+            }
         });
+        // bind a button or a link to open the dialog
+        $('#ndla-images-open').click(function(e) {
+            e.preventDefault();
+            $('#ndla-images-content').dialog('open');
+        });
+
+
 
     });
 
@@ -37,7 +85,7 @@
                 var response = JSON.parse(res);
 
                 if (!(response.totalCount > 0)) {
-                    jQuery('#ndla-results-container').html('<div style="color:#d71500;font-size:16px">No hits</div>');
+                    results_container.html('<div style="color:#d71500;font-size:16px">No hits</div>');
                     return false;
                 }
                 render_px_results(queryString, pageNr, response, results_container, selectCallback);
@@ -46,13 +94,13 @@
         return false;
     };
 
-    function render_px_results(q, p, data, container, selectCallback) {
-        var results_container = container.find("#ndla-results-container");
+    function render_px_results(q, p, data, container) {
+        var results_container = container;
         var hits = data['results']; // store for upload click
         var pages = Math.ceil(data.totalCount / per_page);
         var s = '';
         jQuery.each(data.results, function (k, v) {
-            s += '<div class="thumb" data-idx="' + k + '"><img data-idx="' + k + '" style="width:160px;height:120px;" src="' + v.previewUrl + '"></div>';
+            s += '<div class="thumb attachment" data-idx="' + k + '"><img data-idx="' + k + '" style="width:160px;height:120px;" src="' + v.previewUrl + '"><button type="button" class="button-link check" tabindex="-1"><span class="media-modal-icon"></span><span class="screen-reader-text">Fjern markering</span></button></div>';
         });
         s += '<div style="clear:both;height:30px"></div><div id="paginator" style="text-align:center">';
         if (p == 1)
@@ -71,17 +119,12 @@
         results_container.off('click', '.button');
         results_container.on('click', '.button', function () {
             p = $(this).data('index');
-            ndla_call_api(q, p, container, selectCallback);
+            ndla_call_api(q, p, container);
         });
 
         results_container.off('click', '.thumb > img');
         results_container.on('click', '.thumb > img', hits, function (event) {
-            if (selectCallback) {
-                selectCallback(event);
-            } else {
-                wp.media.editor.insert('<img src="' + $(this)[0].src + '" />');
-            }
-            tb_remove();
+             wp.media.editor.insert('<img src="' + $(this)[0].src + '" />');
         });
 
         resized();
