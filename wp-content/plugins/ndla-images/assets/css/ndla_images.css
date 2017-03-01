@@ -1,14 +1,19 @@
+.wp-dialog {
+    position: absolute;
+    top: 20px;
+    bottom: 20px !important;
+    left: 20px;
+    right: 20px;
+}
+
 .ndla-images {
 }
 
 .ndla-images .image-results {
     border-top: 1px solid #ddd;
-    padding: 10px;
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    right: 300px;
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
 
 .ndla-images .results-container {
@@ -18,6 +23,63 @@
     bottom: 61px;
     right: 0;
 }
+
+.results-container .results {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 300px;
+}
+
+.results-container[data-columns="1"] .attachment {
+    width: 100%
+}
+
+.results-container[data-columns="2"] .attachment {
+    width: 50%
+}
+
+.results-container[data-columns="3"] .attachment {
+    width: 33.33%
+}
+
+.results-container[data-columns="4"] .attachment {
+    width: 25%
+}
+
+.results-container[data-columns="5"] .attachment {
+    width: 20%
+}
+
+.results-container[data-columns="6"] .attachment {
+    width: 16.66%
+}
+
+.results-container[data-columns="7"] .attachment {
+    width: 14.28%
+}
+
+.results-container[data-columns="8"] .attachment {
+    width: 12.5%
+}
+
+.results-container[data-columns="9"] .attachment {
+    width: 11.11%
+}
+
+.results-container[data-columns="10"] .attachment {
+    width: 10%
+}
+
+.results-container[data-columns="11"] .attachment {
+    width: 9.09%
+}
+
+.results-container[data-columns="12"] .attachment {
+    width: 8.33%
+}
+
 
 .ndla-images .search-form {
     width: 100%;
@@ -31,20 +93,23 @@
 }
 
 .ndla-images .ndla-media-sidebar {
-    width: 300px;
+    width: 270px;
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
+    padding-left: 15px;
+    padding-right: 15px;
     background-color: #f3f3f3;
 }
 
 .ndla-images .image-results .thumb {
-    float: left;
-    height: 150px;
-    line-height: 150px;
-    text-align: center;
-    margin: 0 10px 2px 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: hidden;
 }
 
 .ndla-images .image-results .thumb img {
@@ -55,7 +120,6 @@
     height: 110px;
     line-height: 110px;
     text-align: center;
-    margin: 0 8px 2px 0;
 }
 
 .ndla-images .image-results .thumb.small img {
@@ -91,6 +155,7 @@
     position: absolute;
     left: 0;
     top: 0;
+    overflow: scroll;
 }
 
 .ndla-images .ndla-image-footer {

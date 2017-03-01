@@ -20,7 +20,9 @@ function ndla_thickbox_form() {
             <input id="submit-search" class="button" type="submit" value="<?php _e('Search', 'ndla-images'); ?>">
         </form>
         <div class="results-container">
-            <div id="ndla-results-container" class="image-results"></div>
+            <div id="ndla-results-container" class="image-results">
+                <ul class="results"></ul>
+            </div>
             <div class="ndla-media-sidebar">
             </div>
         </div>
