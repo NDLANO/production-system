@@ -7,17 +7,14 @@
             imgIdInput,
             noImage,
             form,
-            input,
-            submitButton;
+            button;
 
         delImgLink = metaBox.find('.delete-ndla-image');
         imgContainer = metaBox.find('.ndla-image-container');
         noImage = metaBox.find('.no-image');
         imgIdInput = metaBox.find('.acf-ndla_image-value');
         form = metaBox.find('#acf-ndla-images-form');
-
-        input = form.find('#q');
-        submitButton = form.find("#submit-search");
+        button = metaBox.find('.add-ndla-image');
 
         // DELETE IMAGE LINK
         delImgLink.off('click');
@@ -40,17 +37,8 @@
 
         });
 
-        input.keyup(submitButton, function (event) {
-            if (event.keyCode == 13) {
-                var button = event.data;
-                button.click();
-            }
-        });
-
-        var select_image = function (event) {
+        var selectImage = function (image) {
             // Send the attachment URL to our custom image input field.
-            var index = $(event.target).data('idx');
-            var image = event.data[index];
             var img = imgContainer.find('.ndla-image');
             img.attr('src', image.previewUrl);
             img.removeClass('hidden');
@@ -64,15 +52,12 @@
             delImgLink.removeClass('hidden');
         };
 
+        button.on('click', function () {
+            var imageDialog = ndlaImageDialog();
+            imageDialog.data('onSubmit', selectImage);
+            imageDialog.dialog('open');
+        })
 
-        submitButton.on('click', function (event) {
-            cache = {};
-            var container = $(event.target).parents('.ndla-images');
-            var input = container.find("#q");
-            q = input.val();
-
-            window.ndla_call_api(q, 1, container, select_image);
-        });
 
     }
 

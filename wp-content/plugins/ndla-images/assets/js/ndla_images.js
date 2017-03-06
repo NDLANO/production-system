@@ -11,6 +11,7 @@
     var numColumns;
     var columnWidth = 150;
     var submitButton;
+    var submitCallback;
 
     jQuery(document).ready(function() {
         var ndlaDialog = $('#ndla-images-content');
@@ -26,12 +27,14 @@
             closeOnEscape: true,
 
             open: function () {
+                submitCallback = ndlaDialog.data('onSubmit');
+                ndlaDialog.dialog( "option", "position", { my: "left top", at: "left top", of: $("body") } );
                 // close dialog by clicking the overlay behind it
                 $('.ui-widget-overlay').bind('click', function(){
                     $('#ndla-images-content').dialog('close');
                 });
 
-                $('body').css('overflow','hidden');
+                //$('body').css('overflow','hidden');
 
                 form = ndlaDialog.find('#ndla-image-form');
                 sidebar = ndlaDialog.find('.ndla-media-sidebar');
@@ -48,7 +51,12 @@
 
                 submitButton  = ndlaDialog.find('.ndla-image-button-insert');
                 submitButton.on('click', selectedIndex, function() {
-                    wp.media.editor.insert('<img src="' + selectedPhoto.previewUrl + '" />');
+                    if (submitCallback != undefined) {
+                        submitCallback(selectedPhoto);
+                    } else {
+                        wp.media.editor.insert('<img src="' + selectedPhoto.previewUrl + '" />');
+                    }
+
                     $('#ndla-images-content').dialog('close');
                 })
             },
@@ -66,12 +74,16 @@
         // bind a button or a link to open the dialog
         $('#ndla-images-open').click(function(e) {
             e.preventDefault();
-            $('#ndla-images-content').dialog('open');
+            ndlaImageDialog().dialog('open');
         });
 
 
 
     });
+
+    window.ndlaImageDialog = function() {
+        return jQuery('#ndla-images-content');
+    };
 
     function resized() {
         if (jQuery(window).width() < 768) jQuery('.thumb').addClass('small'); else jQuery('.thumb').removeClass('small');
