@@ -8,19 +8,28 @@ Text Domain: ndla-images
 function ndla_images_load_plugin_textdomain() {
     load_plugin_textdomain( 'ndla-images', FALSE, basename( dirname( __FILE__ ) ) . '/languages/' );
 }
+
+
 add_action( 'plugins_loaded', 'ndla_images_load_plugin_textdomain' );
 
 function ndla_thickbox_form() {
-add_thickbox(); ?>
-<div id="ndla-images-content" style="display:none;">
-    <div class="ndla-images">
-        <form id="ndla-image-form">
+    ?>
+    <div id="ndla-images-content" class="ndla-images hidden">
+        <form id="ndla-image-form" class="search-form">
             <p><input class="search-term" id="q" type="text" value=""></p>
             <input id="submit-search" class="button" type="submit" value="<?php _e('Search', 'ndla-images'); ?>">
         </form>
-        <div id="ndla-results-container" class="image-results"></div>
+        <div class="results-container">
+            <div id="ndla-results-container" class="image-results">
+                <ul class="results"></ul>
+            </div>
+            <div class="ndla-media-sidebar">
+            </div>
+        </div>
+        <div class="ndla-image-footer">
+            <button type="button" class="button media-button button-primary button-large ndla-image-button-insert" disabled="disabled">Sett inn på side</button>
+        </div>
     </div>
-</div>
     <?php
 }
 
@@ -29,7 +38,9 @@ add_filter('admin_footer', 'ndla_thickbox_form');
 
 function ndla_images_enqueue_js()
 {
-    wp_enqueue_script('my_custom_script', plugin_dir_url(__FILE__) . 'assets/js/ndla_images.js');
+    wp_enqueue_script( 'jquery-ui-dialog' ); // jquery and jquery-ui should be dependencies, didn't check though...
+    wp_enqueue_style( 'wp-jquery-ui-dialog' );
+    wp_enqueue_script('ndla-images-script', plugin_dir_url(__FILE__) . 'assets/js/ndla_images.js');
 }
 
 add_action('admin_enqueue_scripts', 'ndla_images_enqueue_js');
@@ -41,12 +52,12 @@ function ndla_images_enqueue_css() {
 add_action('admin_enqueue_scripts', 'ndla_images_enqueue_css');
 
 function ndla_get_media_dialog_button($id, $text, $classes = []) {
-    $class = "thickbox button ";
+    $class = "button ";
     if (is_array($classes)) {
         $class .= join(" ", $classes);
     }
 
-    $tag = '<a name="NDLA Image" id="' . $id . '-add-media" href="#TB_inline?width=780&height=650&inlineId=ndla-images-content" class="' . $class . '">' . $text . '</a>';
+    $tag = '<a name="NDLA Image" id="ndla-images-open" href="#" class="' . $class . '">' . $text . '</a>';
     echo $tag;
 }
 

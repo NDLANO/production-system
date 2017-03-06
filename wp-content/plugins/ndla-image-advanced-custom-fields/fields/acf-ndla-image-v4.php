@@ -114,16 +114,6 @@ class acf_field_ndla_image extends acf_field {
 	
 	function create_field( $field )
 	{
-		// defaults?
-		/*
-		$field = array_merge($this->defaults, $field);
-		*/
-		
-		// perhaps use $field['preview_size'] to alter the markup?
-		
-
-        // create Field HTML
-        global $post;
         wp_enqueue_media();
 
         $you_have_img = false;
@@ -141,20 +131,9 @@ class acf_field_ndla_image extends acf_field {
 
         }
 
-        add_thickbox();
         ?>
 
         <div id="acf-field-ndla_image" class="acf-image-uploader <?= $you_have_img ? 'active' : '' ?> clearfix">
-            <div id="ndla-media_dialog-<?= $field['key'] ?>" style="display:none;">
-                <div id="ndla-images-<?= $field['key'] ?>" class="ndla-images">
-                    <div id="acf-ndla-images-form">
-                        <p><input class="search-term" id="q" type="text" value=""></p>
-                        <input id="submit-search" class="button" type="button" value="<?php _e('Search', 'acf-ndla-image'); ?>">
-                    </div>
-                    <div id="ndla-results-container" class="image-results"></div>
-                </div>
-            </div>
-
             <input class="acf-ndla_image-value" type="hidden" name="<?php echo $field['name'] ?>" value="<?= $image_id ?>"/>
             <!-- Your image container, which can be manipulated with js -->
             <div class="ndla-image-container has-image">
@@ -168,7 +147,7 @@ class acf_field_ndla_image extends acf_field {
             </div>
             <div class="no-image <?= $you_have_img ? 'hidden' : '' ?>">
                 <p><?php _e('no image selected', 'acf-ndla-image'); ?>
-                    <a name="<?php _e('NDLA Image', 'acf-ndla-image') ?>" href="#TB_inline?width=780&height=650&inlineId=ndla-media_dialog-<?= $field['key'] ?>" class="add-ndla-image thickbox button"><?php _e('Choose image', 'acf-ndla-image') ?></a>
+                    <a name="<?php _e('NDLA Image', 'acf-ndla-image') ?>" href="#" class="add-ndla-image button"><?php _e('Choose image', 'acf-ndla-image') ?></a>
                 </p>
             </div>
 

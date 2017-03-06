@@ -1,10 +1,89 @@
+.wp-dialog {
+    position: absolute;
+    top: 20px !important;
+    bottom: 20px !important;
+    left: 20px !important;
+    right: 20px !important;
+}
+
 .ndla-images {
-    padding: 10px 15px 25px;
 }
 
 .ndla-images .image-results {
-    margin-top: 25px;
     border-top: 1px solid #ddd;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.ndla-images .results-container {
+    position: absolute;
+    left: 0;
+    top: 150px;
+    bottom: 61px;
+    right: 0;
+}
+
+.results-container .results {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 300px;
+}
+
+.results-container[data-columns="1"] .attachment {
+    width: 100%
+}
+
+.results-container[data-columns="2"] .attachment {
+    width: 50%
+}
+
+.results-container[data-columns="3"] .attachment {
+    width: 33.33%
+}
+
+.results-container[data-columns="4"] .attachment {
+    width: 25%
+}
+
+.results-container[data-columns="5"] .attachment {
+    width: 20%
+}
+
+.results-container[data-columns="6"] .attachment {
+    width: 16.66%
+}
+
+.results-container[data-columns="7"] .attachment {
+    width: 14.28%
+}
+
+.results-container[data-columns="8"] .attachment {
+    width: 12.5%
+}
+
+.results-container[data-columns="9"] .attachment {
+    width: 11.11%
+}
+
+.results-container[data-columns="10"] .attachment {
+    width: 10%
+}
+
+.results-container[data-columns="11"] .attachment {
+    width: 9.09%
+}
+
+.results-container[data-columns="12"] .attachment {
+    width: 8.33%
+}
+
+
+.ndla-images .search-form {
+    width: 100%;
+    display: block;
 }
 
 .ndla-images .search-term {
@@ -13,20 +92,83 @@
     padding: 7px 9px;
 }
 
-.ndla-images .image-results .thumb { float: left; height: 150px; line-height: 150px; text-align: center; margin: 0 10px 2px 0; }
-.ndla-images .image-results .thumb img { vertical-align: middle; }
-.ndla-images .image-results .thumb.small { height: 110px; line-height: 110px; text-align: center; margin: 0 8px 2px 0; }
-.ndla-images .image-results .thumb.small img { height: auto !important; width: auto !important; max-height: 110px; max-width: 110px; vertical-align: middle; }
-.ndla-images .image-results .thumb .preview img { max-height: none; max-width: none; }
+.ndla-images .ndla-media-sidebar {
+    width: 270px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    padding-left: 15px;
+    padding-right: 15px;
+    background-color: #f3f3f3;
+}
+
+.ndla-images .image-results .thumb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: hidden;
+}
+
+.ndla-images .image-results .thumb img {
+    vertical-align: middle;
+}
+
+.ndla-images .image-results .thumb.small {
+    height: 110px;
+    line-height: 110px;
+    text-align: center;
+}
+
+.ndla-images .image-results .thumb.small img {
+    height: auto !important;
+    width: auto !important;
+    max-height: 110px;
+    max-width: 110px;
+    vertical-align: middle;
+}
+
+.ndla-images .image-results .thumb .preview img {
+    max-height: none;
+    max-width: none;
+}
+
 .ndla-images .image-results .preview {
-    z-index: 99999; position: absolute; background: #fff; border: 10px solid #fff; border: 10px solid rgba(255,255,255,.95);
-    -webkit-background-clip: padding-box; background-clip: padding-box;
-    border-radius: 2px; -moz-border-radius: 2px; -webkit-border-radius: 2px;
-    -webkit-box-shadow: 0 1px 8px rgba(0,0,0,.3); -moz-box-shadow: 0 1px 8px rgba(0,0,0,.3); box-shadow: 0 1px 8px rgba(0,0,0,.3);
+    z-index: 99999;
+    position: absolute;
+    background: #fff;
+    border: 10px solid rgba(255, 255, 255, .95);
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -webkit-box-shadow: 0 1px 8px rgba(0, 0, 0, .3);
+    -moz-box-shadow: 0 1px 8px rgba(0, 0, 0, .3);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, .3);
     line-height: 1;
 }
-.ndla-images .image-results .preview img { position: absolute; left: 0; top: 0; }
 
-#TB_ajaxContent {
-    width: 95% !important;
+.ndla-images .image-results .preview img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    overflow: scroll;
+}
+
+.ndla-images .ndla-image-footer {
+    border-top: 1px solid #ddd;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 60px;
+}
+
+.ndla-images .ndla-image-button-insert {
+    float: right;
+    margin-top: 15px;
+    margin-right: 15px;
 }
