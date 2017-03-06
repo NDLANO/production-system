@@ -26,7 +26,7 @@ services:
     environment:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_PASSWORD: wordpress
-      XDEBUG_CONFIG: "remote_host=10.4.51.61 remote_enable=1"
+      XDEBUG_CONFIG: "remote_host=10.4.51.153 remote_enable=1"
 
     volumes:
       - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
