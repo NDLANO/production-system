@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2017-02-07 10:19+0100\n"
-"PO-Revision-Date: 2017-02-07 10:20+0100\n"
+"POT-Creation-Date: 2017-03-10 10:55+0100\n"
+"PO-Revision-Date: 2017-03-10 10:55+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en_GB\n"
@@ -16,7 +16,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: acf-ndla-image.php\n"
 "X-Poedit-SearchPath-1: fields/acf-ndla-image-v4.php\n"
 
-#: fields/acf-ndla-image-v4.php:31
+#: fields/acf-ndla-image-v4.php:31 fields/acf-ndla-image-v4.php:165
 msgid "NDLA Image"
 msgstr "NDLA Image"
 
@@ -25,29 +25,51 @@ msgid "Content"
 msgstr "Content"
 
 #: fields/acf-ndla-image-v4.php:78
-msgid "Preview Size"
-msgstr "Preview Size"
+msgid "Media types"
+msgstr "Media types"
 
-#: fields/acf-ndla-image-v4.php:79
-msgid "Thumbnail is advised"
-msgstr "Thumbnail is advised"
+#: fields/acf-ndla-image-v4.php:89
+msgid "Image"
+msgstr "Image"
 
 #: fields/acf-ndla-image-v4.php:90
-msgid "Thumbnail"
-msgstr "Thumbnail"
+msgid "All types"
+msgstr "All types"
 
-#: fields/acf-ndla-image-v4.php:91
-msgid "Something Else"
-msgstr "Something Else"
+#: fields/acf-ndla-image-v4.php:164
+msgid "no image selected"
+msgstr "no image selected"
 
-#: fields/acf-ndla-image-v4.php:152
-msgid "Search"
-msgstr "Search"
-
-#: fields/acf-ndla-image-v4.php:168
+#: fields/acf-ndla-image-v4.php:165
 msgid "Choose image"
 msgstr "Choose image"
 
-#: fields/acf-ndla-image-v4.php:171
-msgid "Remove image"
-msgstr "Remove image"
+#: fields/acf-ndla-image-v4.php:167
+msgid "Choose video"
+msgstr "Choose video"
+
+#: fields/acf-ndla-image-v4.php:172
+msgid "Remove"
+msgstr "Remove"
+
+#: fields/acf-ndla-image-v4.php:173
+msgid "Edit"
+msgstr "Edit"
+
+#~ msgid "Preview Size"
+#~ msgstr "Preview Size"
+
+#~ msgid "Thumbnail is advised"
+#~ msgstr "Thumbnail is advised"
+
+#~ msgid "Thumbnail"
+#~ msgstr "Thumbnail"
+
+#~ msgid "Something Else"
+#~ msgstr "Something Else"
+
+#~ msgid "Search"
+#~ msgstr "Search"
+
+#~ msgid "Remove image"
+#~ msgstr "Remove image"

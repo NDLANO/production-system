@@ -25,7 +25,7 @@ function create_acf_field_group()
                     'name' => 'metabilde',
                     'type' => 'ndla_image',
                     'required' => 1,
-                    'preview_size' => 'thumbnail',
+                    'media_types' => 'image',
                 ),
                 array(
                     'key' => 'field_5881d70101385',
@@ -45,7 +45,7 @@ function create_acf_field_group()
                     'name' => 'visuelt_element',
                     'type' => 'ndla_image',
                     'required' => 1,
-                    'preview_size' => 'thumbnail',
+                    'media_types' => 'all',
                 ),
                 array(
                     'key' => 'field_5881d78801386',

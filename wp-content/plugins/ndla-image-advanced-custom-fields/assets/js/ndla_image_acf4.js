@@ -4,6 +4,7 @@
 
         var delImgLink,
             imgContainer,
+            videoContainer,
             imgIdInput,
             noImage,
             form,
@@ -11,6 +12,7 @@
 
         delImgLink = metaBox.find('.delete-ndla-image');
         imgContainer = metaBox.find('.ndla-image-container');
+        videoContainer = imgContainer.find('.ndla-video');
         noImage = metaBox.find('.no-image');
         imgIdInput = metaBox.find('.acf-ndla_image-value');
         form = metaBox.find('#acf-ndla-images-form');
@@ -23,6 +25,7 @@
             event.preventDefault();
             var img = imgContainer.find('.ndla-image');
             img.attr('src', '');
+            videoContainer.html('');
             img.addClass('hidden');
 
             imgContainer.parent().removeClass('active');
@@ -56,9 +59,43 @@
             var imageDialog = ndlaImageDialog();
             imageDialog.data('onSubmit', selectImage);
             imageDialog.dialog('open');
-        })
+        });
+
+        var insertShortcode = function() {
+            var old_send_to_editor = window.send_to_editor;
+            window.send_to_editor = function (shortcode) {
+                var regex = /\[bc_video video_id="(\d+)" account_id="(\d+)"/;
+                var match = regex.exec(shortcode);
+
+                var data = {
+                    'action': 'acf-ndla-image-video-shortcode',
+                    'mediaId': match[1],
+                    'accountId': match[2]
+                };
+
+                jQuery.get(ajaxurl, data, function(html) {
+                    videoContainer.html(html);
+                    videoContainer.removeClass('hidden');
+                    noImage.addClass('hidden');
+                    imgContainer.parent().addClass('active');
+                    // Show the remove image link
+                    delImgLink.removeClass('hidden');
+
+                });
+
+                imgIdInput.val("video-" + match[1]);
 
 
+                window.send_to_editor = old_send_to_editor;
+            }
+        };
+
+
+        var object = {};
+
+        _.extend(object, Backbone.Events);
+
+        object.listenTo(wpbc.broadcast, 'insert:shortcode', insertShortcode);
     }
 
     $(document).on('acf/setup_fields', function (e, ndla_container) {
@@ -84,8 +121,8 @@
             }
         }
 
-
     });
+
 
 
 })(jQuery);

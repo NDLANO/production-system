@@ -75,20 +75,19 @@ class acf_field_ndla_image extends acf_field {
 		?>
 <tr class="field_option field_option_<?php echo $this->name; ?>">
 	<td class="label">
-		<label><?php _e("Preview Size",'acf'); ?></label>
-		<p class="description"><?php _e("Thumbnail is advised",'acf'); ?></p>
+		<label><?php _e("Media types",'acf-ndla'); ?></label>
 	</td>
 	<td>
 		<?php
 		
 		do_action('acf/create_field', array(
 			'type'		=>	'radio',
-			'name'		=>	'fields['.$key.'][preview_size]',
-			'value'		=>	$field['preview_size'],
+			'name'		=>	'fields['.$key.'][media_types]',
+			'value'		=>	$field['media_types'],
 			'layout'	=>	'horizontal',
 			'choices'	=>	array(
-				'thumbnail' => __('Thumbnail'),
-				'something_else' => __('Something Else'),
+				'image' => __('Image'),
+				'all' => __('All types'),
 			)
 		));
 		
@@ -114,41 +113,67 @@ class acf_field_ndla_image extends acf_field {
 	
 	function create_field( $field )
 	{
+        global $bc_accounts;
+
         wp_enqueue_media();
 
-        $you_have_img = false;
-        $imageUrl = "";
-        $image_id = 0;
+        $fieldHasImg = false;
+        $fieldHasVideo = false;
+        $mediaUrl = "";
+        $mediaId = 0;
+        $mediaType = "";
+        $supportedMediaTypes = $field['media_types'];
+
 
         // See if there's a media id already saved as post meta
         if ($field['value'] != '') {
-        $image_id = $field['value'];
+            $value = $field['value'];
+            if (substr($value, 0, 6) === 'video-') {
+                $mediaType = 'video';
+                $mediaId = substr($value, 6);
+                $fieldHasVideo = true;
+                $fieldHasImg = false;
+                $accountId = $bc_accounts->get_account_id();
+                $shortcode = sprintf("[bc_video video_id=\"%s\" account_id=\"%s\" player_id=\"default\"]", $mediaId, $accountId);
+                $mediaUrl = do_shortcode($shortcode);
 
-        $api      = new NDLA\ImageAPIGateway();
-        $response = json_decode($api->getDetails( $image_id, true ), true);
-        $you_have_img = true;
-        $imageUrl = $response['imageUrl'];
+            } else {
+                $mediaType = 'image';
+                $mediaId = $value;
+                $fieldHasImg = true;
+                $fieldHasVideo = false;
+
+                $api      = new NDLA\ImageAPIGateway();
+                $response = json_decode($api->getDetails( $mediaId, true ), true);
+                $mediaUrl = $response['imageUrl'];
+            }
 
         }
 
+        $hasValue = $fieldHasImg || $fieldHasVideo;
+
         ?>
 
-        <div id="acf-field-ndla_image" class="acf-image-uploader <?= $you_have_img ? 'active' : '' ?> clearfix">
-            <input class="acf-ndla_image-value" type="hidden" name="<?php echo $field['name'] ?>" value="<?= $image_id ?>"/>
+        <div id="acf-field-ndla_image" class="<?= $fieldHasImg ? 'active' : '' ?> clearfix">
+            <input class="acf-ndla_image-value" type="hidden" name="<?php echo $field['name'] ?>" value="<?= $mediaId ?>"/>
             <!-- Your image container, which can be manipulated with js -->
-            <div class="ndla-image-container has-image">
-                <div class="hover">
-                    <ul class="bl">
-                        <li><a class="acf-button-delete ir delete-ndla-image" href="#">Remove</a></li>
-                        <li><a class="acf-button-edit ir" href="#">Edit</a></li>
-                    </ul>
+            <div class="ndla-image-container acf-image-uploader has-image">
+                <img src="<?= $fieldHasImg ? $mediaUrl : '' ?>" class="ndla-image" alt="" style="max-width:320px;" />
+                <div class="ndla-video <?= $fieldHasVideo ? '' : 'hidden' ?>">
+                    <?= $fieldHasImg ? '' : $mediaUrl ?>
                 </div>
-                <img src="<?= $imageUrl ?>" class="ndla-image <?= $you_have_img ? '' : 'hidden' ?>" alt="" style="max-width:320px;" />
             </div>
-            <div class="no-image <?= $you_have_img ? 'hidden' : '' ?>">
-                <p><?php _e('no image selected', 'acf-ndla-image'); ?>
+            <div class="no-image <?= $hasValue ? 'hidden' : '' ?>">
+                <div><?php _e('no image selected', 'acf-ndla-image'); ?>
                     <a name="<?php _e('NDLA Image', 'acf-ndla-image') ?>" href="#" class="add-ndla-image button"><?php _e('Choose image', 'acf-ndla-image') ?></a>
-                </p>
+                    <?php if ($supportedMediaTypes === 'all'): ?>
+                        <a href="#" id="brightcove-add-media" class="button brightcove-add-media"><?php _e('Choose video', 'acf-ndla-image') ?></a>
+                    <?php endif ?>
+                </div>
+            </div>
+            <div class="delete-ndla-image <?= $hasValue ? '' : 'hidden' ?>">
+                <a class="delete-ndla-image button" href="#"><?php _e("Remove") ?></a>
+                <a class="edit-ndla-image button disabled" href="#"><?php _e("Edit") ?></a>
             </div>
 
             <!-- Your add & remove image links -->
@@ -402,6 +427,23 @@ class acf_field_ndla_image extends acf_field {
 
 // initialize
 new acf_field_ndla_image( $this->settings );
+
+/*
+ * AJAX endpoints
+ */
+add_action( 'wp_ajax_acf-ndla-image-video-shortcode', 'acf_ndla_video_shortcode');
+
+function acf_ndla_video_shortcode()
+{
+    $accountId = $_GET['accountId'];
+    $mediaId = $_GET['mediaId'];
+
+    $shortcode = sprintf("[bc_video video_id=\"%s\" account_id=\"%s\" player_id=\"default\"]", $mediaId, $accountId);
+    $mediaUrl = do_shortcode($shortcode);
+
+    echo $mediaUrl;
+    wp_die();
+}
 
 
 // class_exists check
